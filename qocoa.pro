@@ -1,8 +1,8 @@
 SOURCES += main.cpp\
-        gallery.cpp
+           gallery.cpp \
 
 HEADERS += gallery.h \
-    qsearchfield.h
+           qsearchfield.h \
 
 !mac:SOURCES += qsearchfield.cpp
 mac:SOURCES += qsearchfield_mac.mm
