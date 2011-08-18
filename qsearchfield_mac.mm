@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 #import "Foundation/NSAutoreleasePool.h"
 #import "Foundation/NSNotification.h"
-#import "AppKit/NSTextField.h"
 #import "AppKit/NSSearchField.h"
 
 class QSearchFieldPrivate
