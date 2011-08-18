@@ -2,6 +2,7 @@ SOURCES += main.cpp\
            gallery.cpp \
 
 HEADERS += gallery.h \
+           qocoa_mac.h \
            qsearchfield.h \
 
 !mac:SOURCES += qsearchfield.cpp

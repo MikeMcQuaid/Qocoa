@@ -20,6 +20,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#include "qocoa_mac.h"
+
 #include "qsearchfield.h"
 
 #include <QMacCocoaViewContainer>
@@ -29,19 +31,6 @@ THE SOFTWARE.
 #import "Foundation/NSNotification.h"
 #import "AppKit/NSTextField.h"
 #import "AppKit/NSSearchField.h"
-
-NSString* fromQString(const QString &string)
-{
-    char* cString = string.toUtf8().data();
-    return [[NSString alloc] initWithUTF8String:cString];
-}
-
-QString toQString(NSString *string)
-{
-    if (!string)
-        return QString();
-    return QString::fromUtf8([string UTF8String]);
-}
 
 class QSearchFieldPrivate
 {
