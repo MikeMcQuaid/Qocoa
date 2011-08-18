@@ -81,7 +81,7 @@ QSearchField::QSearchField(QWidget *parent) : QWidget(parent)
 
     [search release];
 
-    [pool release];
+    [pool drain];
 }
 
 void QSearchField::setText(const QString &text)
