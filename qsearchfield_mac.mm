@@ -86,5 +86,7 @@ QSearchField::QSearchField(QWidget *parent) : QWidget(parent)
 
 void QSearchField::setText(const QString &text)
 {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     [pimpl->nsSearchField setStringValue:fromQString(text)];
+    [pool drain];
 }
