@@ -24,9 +24,6 @@ THE SOFTWARE.
 
 #include "qbutton.h"
 
-#include <QMacCocoaViewContainer>
-#include <QVBoxLayout>
-
 #import "Foundation/NSAutoreleasePool.h"
 #import "AppKit/NSButton.h"
 
@@ -140,9 +137,7 @@ QButton::QButton(QWidget *parent, BezelStyle bezelStyle) : QWidget(parent)
     [button setTarget:target];
     [button setAction:@selector(clicked)];
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(0);
-    layout->addWidget(new QMacCocoaViewContainer(button, this));
+    zeroLayout(button, this);
 
     [button release];
 

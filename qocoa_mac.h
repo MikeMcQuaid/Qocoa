@@ -22,6 +22,8 @@ THE SOFTWARE.
 
 #include <Foundation/NSString.h>
 #include <QString>
+#include <QVBoxLayout>
+#include <QMacCocoaViewContainer>
 
 static inline NSString* fromQString(const QString &string)
 {
@@ -34,4 +36,11 @@ static inline QString toQString(NSString *string)
     if (!string)
         return QString();
     return QString::fromUtf8([string UTF8String]);
+}
+
+static inline void zeroLayout(void *cocoaView, QWidget *parent)
+{
+    QVBoxLayout *layout = new QVBoxLayout(parent);
+    layout->setMargin(0);
+    layout->addWidget(new QMacCocoaViewContainer(cocoaView, parent));
 }

@@ -24,9 +24,6 @@ THE SOFTWARE.
 
 #include "qsearchfield.h"
 
-#include <QMacCocoaViewContainer>
-#include <QVBoxLayout>
-
 #import "Foundation/NSAutoreleasePool.h"
 #import "Foundation/NSNotification.h"
 #import "AppKit/NSSearchField.h"
@@ -70,9 +67,7 @@ QSearchField::QSearchField(QWidget *parent) : QWidget(parent)
     delegate->pimpl = pimpl;
     [search setDelegate:delegate];
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(0);
-    layout->addWidget(new QMacCocoaViewContainer(search, this));
+    zeroLayout(search, this);
 
     setFixedHeight(20);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
