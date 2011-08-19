@@ -4,6 +4,7 @@
 
 #include "qsearchfield.h"
 #include "qbutton.h"
+#include "qprogressindicatorspinning.h"
 
 Gallery::Gallery(QWidget *parent) : QWidget(parent)
 {
@@ -23,4 +24,5 @@ Gallery::Gallery(QWidget *parent) : QWidget(parent)
     layout->addWidget(new QButton(this, QButton::Recessed));
     layout->addWidget(new QButton(this, QButton::RoundedDisclosure));
     layout->addWidget(new QButton(this, QButton::Inline));
+    layout->addWidget(new QProgressIndicatorSpinning(this));
 }
