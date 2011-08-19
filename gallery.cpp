@@ -7,6 +7,7 @@
 
 Gallery::Gallery(QWidget *parent) : QWidget(parent)
 {
+    setWindowTitle("Qocoa Gallery");
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(new QSearchField(this));
     layout->addWidget(new QButton(this, QButton::Rounded));
