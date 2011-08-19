@@ -65,7 +65,6 @@ QSearchField::QSearchField(QWidget *parent) : QWidget(parent)
 
     NSSearchField *search = [[NSSearchField alloc] init];
     pimpl = new QSearchFieldPrivate(this, search);
-    [search sizeToFit];
 
     QSearchFieldDelegate *delegate = [[QSearchFieldDelegate alloc] init];
     delegate->pimpl = pimpl;
