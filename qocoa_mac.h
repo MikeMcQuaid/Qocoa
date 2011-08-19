@@ -23,13 +23,13 @@ THE SOFTWARE.
 #include <Foundation/NSString.h>
 #include <QString>
 
-static NSString* fromQString(const QString &string)
+static inline NSString* fromQString(const QString &string)
 {
     char* cString = string.toUtf8().data();
     return [[NSString alloc] initWithUTF8String:cString];
 }
 
-static QString toQString(NSString *string)
+static inline QString toQString(NSString *string)
 {
     if (!string)
         return QString();
