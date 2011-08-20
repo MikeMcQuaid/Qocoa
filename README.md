@@ -11,3 +11,5 @@ They have the following features/goals:
 
 Qocoa is licensed under the MIT license.
 The full license text is available in LICENSE.txt.
+
+![Qocoa Gallery](https://github.com/mikemcquaid/Qocoa/raw/master/gallery.png)
