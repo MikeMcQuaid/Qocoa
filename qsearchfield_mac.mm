@@ -38,6 +38,12 @@ public:
     {
         emit qSearchField->textChanged(text);
     }
+
+    void textDidEndEditing()
+    {
+        emit qSearchField->editingFinished();
+    }
+
     QSearchField *qSearchField;
     NSSearchField *nsSearchField;
 };
@@ -48,11 +54,17 @@ public:
     QSearchFieldPrivate* pimpl;
 }
 -(void)controlTextDidChange:(NSNotification*)notification;
+-(void)controlTextDidEndEditing:(NSNotification*)notification;
 @end
 
 @implementation QSearchFieldDelegate
 -(void)controlTextDidChange:(NSNotification*)notification {
     pimpl->textDidChange(toQString([[notification object] stringValue]));
+}
+
+-(void)controlTextDidEndEditing:(NSNotification*)notification {
+    Q_UNUSED(notification);
+    pimpl->textDidEndEditing();
 }
 @end
 
@@ -82,4 +94,21 @@ void QSearchField::setText(const QString &text)
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     [pimpl->nsSearchField setStringValue:fromQString(text)];
     [pool drain];
+}
+
+void QSearchField::setPlaceholderText(const QString &text)
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [[pimpl->nsSearchField cell] setPlaceholderString:fromQString(text)];
+    [pool drain];
+}
+
+void QSearchField::clear()
+{
+    [pimpl->nsSearchField setStringValue:@""];
+}
+
+QString QSearchField::text() const
+{
+    return toQString([pimpl->nsSearchField stringValue]);
 }

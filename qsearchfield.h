@@ -10,11 +10,16 @@ class QSearchField : public QWidget
 public:
     explicit QSearchField(QWidget *parent);
 
+    QString text() const;
+
 public slots:
     void setText(const QString &text);
+    void setPlaceholderText(const QString &text);
 
+    void clear();
 signals:
     void textChanged(const QString &text);
+    void editingFinished();
 
 private:
     friend class QSearchFieldPrivate;
