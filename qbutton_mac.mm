@@ -69,11 +69,6 @@ public:
                 qButton->setFixedHeight(18);
                 qButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
                 break;
-            case QButton::Inline:
-                qButton->setMinimumWidth(10);
-                qButton->setFixedHeight(16);
-                qButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-                break;
             case QButton::Disclosure:
                 qButton->setMinimumWidth(13);
                 qButton->setFixedHeight(13);
@@ -90,6 +85,13 @@ public:
                 qButton->setFixedHeight(22);
                 qButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
                 break;
+#ifdef MAC_OS_X_VERSION_10_7
+            case QButton::Inline:
+                qButton->setMinimumWidth(10);
+                qButton->setFixedHeight(16);
+                qButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+                break;
+#endif
         }
 
         [nsButton setBezelStyle:bezelStyle];

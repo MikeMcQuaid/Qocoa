@@ -23,6 +23,8 @@ Gallery::Gallery(QWidget *parent) : QWidget(parent)
     layout->addWidget(new QButton(this, QButton::RoundRect));
     layout->addWidget(new QButton(this, QButton::Recessed));
     layout->addWidget(new QButton(this, QButton::RoundedDisclosure));
+#ifdef MAC_OS_X_VERSION_10_7
     layout->addWidget(new QButton(this, QButton::Inline));
+#endif
     layout->addWidget(new QProgressIndicatorSpinning(this));
 }
