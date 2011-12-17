@@ -36,7 +36,7 @@ QProgressIndicatorSpinning::QProgressIndicatorSpinning(QWidget *parent) : QWidge
     // TODO: This doesn't work yet.
     [progress startAnimation:nil];
 
-    zeroLayout(progress, this);
+    setupLayout(progress, this);
 
     setMinimumSize(16, 16);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);

@@ -79,7 +79,7 @@ QSearchField::QSearchField(QWidget *parent) : QWidget(parent)
     delegate->pimpl = pimpl;
     [search setDelegate:delegate];
 
-    zeroLayout(search, this);
+    setupLayout(search, this);
 
     setFixedHeight(20);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);

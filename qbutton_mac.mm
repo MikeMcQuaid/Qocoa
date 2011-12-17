@@ -139,7 +139,7 @@ QButton::QButton(QWidget *parent, BezelStyle bezelStyle) : QWidget(parent)
     [button setTarget:target];
     [button setAction:@selector(clicked)];
 
-    zeroLayout(button, this);
+    setupLayout(button, this);
 
     [button release];
 
