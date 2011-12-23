@@ -40,8 +40,8 @@ static inline QString toQString(NSString *string)
 
 static inline void setupLayout(void *cocoaView, QWidget *parent)
 {
+    parent->setAttribute(Qt::WA_NativeWindow);
     QVBoxLayout *layout = new QVBoxLayout(parent);
     layout->setMargin(0);
     layout->addWidget(new QMacCocoaViewContainer(cocoaView, parent));
-    parent->setAttribute(Qt::WA_NativeWindow);
 }
