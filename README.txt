@@ -13,6 +13,6 @@ They have the following features/goals:
 Qocoa is licensed under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 The full license text is available in [LICENSE.txt](https://github.com/mikemcquaid/Qocoa/blob/master/LICENSE.txt).
 
-The non-Mac QSearchField clear icon is taken from the [Oxygen Project](http://www.oxygen-icons.org/) and is licensed under the [Creative Commons Attribution-ShareAlike 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).
+The [non-Mac QSearchField icon](https://github.com/mikemcquaid/Qocoa/blob/master/qsearchfield_nonmac.png) is taken from the [Oxygen Project](http://www.oxygen-icons.org/) and is licensed under the [Creative Commons Attribution-ShareAlike 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/).
 
 ![Qocoa Gallery](https://github.com/mikemcquaid/Qocoa/raw/master/gallery.png)
