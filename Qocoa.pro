@@ -13,6 +13,7 @@ mac {
     QMAKE_CFLAGS += -mmacosx-version-min=10.6
 } else {
     SOURCES += qsearchfield_nonmac.cpp qbutton_nonmac.cpp qprogressindicatorspinning_nonmac.cpp
+    RESOURCES += qsearchfield_nonmac.qrc
 }
 
 contains(QT_CONFIG, embedded):debug {

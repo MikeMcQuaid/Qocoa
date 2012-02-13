@@ -21,6 +21,9 @@ signals:
     void textChanged(const QString &text);
     void editingFinished();
 
+protected:
+    void resizeEvent(QResizeEvent*);
+
 private:
     friend class QSearchFieldPrivate;
     QSearchFieldPrivate *pimpl;

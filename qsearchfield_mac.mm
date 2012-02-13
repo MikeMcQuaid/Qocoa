@@ -81,7 +81,7 @@ QSearchField::QSearchField(QWidget *parent) : QWidget(parent)
 
     setupLayout(search, this);
 
-    setFixedHeight(20);
+    setFixedHeight(24);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
     [search release];
@@ -106,9 +106,15 @@ void QSearchField::setPlaceholderText(const QString &text)
 void QSearchField::clear()
 {
     [pimpl->nsSearchField setStringValue:@""];
+    emit textChanged(QString());
 }
 
 QString QSearchField::text() const
 {
     return toQString([pimpl->nsSearchField stringValue]);
+}
+
+void QSearchField::resizeEvent(QResizeEvent *resizeEvent)
+{
+    QWidget::resizeEvent(resizeEvent);
 }
