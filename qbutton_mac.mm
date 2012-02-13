@@ -26,19 +26,46 @@ THE SOFTWARE.
 
 #import "Foundation/NSAutoreleasePool.h"
 #import "AppKit/NSButton.h"
+#import "AppKit/NSFont.h"
 
 class QButtonPrivate
 {
 public:
-    QButtonPrivate(QButton *qButton, NSButton *nsButton,
-                   QButton::BezelStyle bezelStyle)
+    QButtonPrivate(QButton *qButton, NSButton *nsButton, QButton::BezelStyle bezelStyle)
         : qButton(qButton), nsButton(nsButton)
     {
-        if (bezelStyle == QButton::Disclosure
-                || bezelStyle == QButton::Circular
-                || bezelStyle == QButton::HelpButton
-                || bezelStyle == QButton::RoundedDisclosure)
-                setText(QString());
+        switch(bezelStyle) {
+            case QButton::Disclosure:
+            case QButton::Circular:
+            case QButton::Inline:
+            case QButton::RoundedDisclosure:
+            case QButton::HelpButton:
+                [nsButton setTitle:@""];
+            default:
+                break;
+        }
+
+        NSFont* font = 0;
+        switch(bezelStyle) {
+            case QButton::RoundRect:
+                font = [NSFont fontWithName:@"Lucida Grande" size:12];
+                break;
+
+            case QButton::Recessed:
+                font = [NSFont fontWithName:@"Lucida Grande Bold" size:12];
+                break;
+
+#ifdef MAC_OS_X_VERSION_10_7
+            case QButton::Inline:
+                font = [NSFont boldSystemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
+                break;
+#endif
+
+            default:
+                font = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSRegularControlSize]];
+                break;
+        }
+        [nsButton setFont:font];
 
         switch(bezelStyle) {
             case QButton::Rounded:
@@ -94,19 +121,21 @@ public:
 #endif
         }
 
+        switch(bezelStyle) {
+            case QButton::Recessed:
+                [nsButton setButtonType:NSPushOnPushOffButton];
+            case QButton::Disclosure:
+                [nsButton setButtonType:NSOnOffButton];
+            default:
+                [nsButton setButtonType:NSMomentaryPushInButton];
+        }
+
         [nsButton setBezelStyle:bezelStyle];
     }
 
     void clicked()
     {
-        emit qButton->clicked();
-    }
-
-    void setText(const QString &text)
-    {
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        [nsButton setTitle:fromQString(text)];
-        [pool drain];
+        emit qButton->clicked(qButton->isChecked());
     }
 
     QButton *qButton;
@@ -148,5 +177,28 @@ QButton::QButton(QWidget *parent, BezelStyle bezelStyle) : QWidget(parent)
 
 void QButton::setText(const QString &text)
 {
-    pimpl->setText(text);
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [pimpl->nsButton setTitle:fromQString(text)];
+    [pool drain];
+}
+
+void QButton::setImage(const QPixmap &image)
+{
+    [pimpl->nsButton setImage:fromQPixmap(image)];
+}
+
+void QButton::setChecked(bool checked)
+{
+    [pimpl->nsButton setState:checked];
+}
+
+void QButton::setCheckable(bool checkable)
+{
+    const NSInteger cellMask = checkable ? NSChangeBackgroundCellMask : NSNoCellMask;
+    [[pimpl->nsButton cell] setShowsStateBy:cellMask];
+}
+
+bool QButton::isChecked()
+{
+    return [pimpl->nsButton state];
 }

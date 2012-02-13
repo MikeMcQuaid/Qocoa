@@ -31,9 +31,15 @@ public:
 
 public slots:
     void setText(const QString &text);
+    void setImage(const QPixmap &image);
+    void setChecked(bool checked);
+
+public:
+    void setCheckable(bool checkable);
+    bool isChecked();
 
 signals:
-    void clicked();
+    void clicked(bool checked = false);
 
 private:
     friend class QButtonPrivate;

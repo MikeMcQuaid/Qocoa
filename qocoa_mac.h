@@ -38,6 +38,12 @@ static inline QString toQString(NSString *string)
     return QString::fromUtf8([string UTF8String]);
 }
 
+static inline NSImage* fromQPixmap(const QPixmap &pixmap)
+{
+    CGImageRef cgImage = pixmap.toMacCGImageRef();
+    return [[NSImage alloc] initWithCGImage:cgImage size:NSZeroSize];
+}
+
 static inline void setupLayout(void *cocoaView, QWidget *parent)
 {
     parent->setAttribute(Qt::WA_NativeWindow);

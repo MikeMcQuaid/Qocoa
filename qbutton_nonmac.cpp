@@ -22,29 +22,57 @@ THE SOFTWARE.
 
 #include "qbutton.h"
 
+#include <QToolBar>
+#include <QToolButton>
 #include <QPushButton>
 #include <QVBoxLayout>
+
+#include <QDebug>
 
 class QButtonPrivate
 {
 public:
-    QButtonPrivate(QPushButton *pushButton) : pushButton(pushButton) {}
-    QPushButton *pushButton;
+    QButtonPrivate(QAbstractButton *button) : button(button) {}
+    QAbstractButton *button;
 };
 
 QButton::QButton(QWidget *parent, BezelStyle) : QWidget(parent)
 {
-    QPushButton *pushButton = new QPushButton(this);
-    connect(pushButton, SIGNAL(clicked()),
+    QAbstractButton *button = 0;
+    if (qobject_cast<QToolBar*>(parent))
+        button = new QToolButton(this);
+    else
+        button = new QPushButton(this);
+    connect(button, SIGNAL(clicked()),
             this, SIGNAL(clicked()));
-    pimpl = new QButtonPrivate(pushButton);
+    pimpl = new QButtonPrivate(button);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
-    layout->addWidget(pushButton);
+    layout->addWidget(button);
 }
 
 void QButton::setText(const QString &text)
 {
-    pimpl->pushButton->setText(text);
+    pimpl->button->setText(text);
+}
+
+void QButton::setImage(const QPixmap &image)
+{
+    pimpl->button->setIcon(image);
+}
+
+void QButton::setChecked(bool checked)
+{
+    pimpl->button->setChecked(checked);
+}
+
+void QButton::setCheckable(bool checkable)
+{
+    pimpl->button->setCheckable(checkable);
+}
+
+bool QButton::isChecked()
+{
+    return pimpl->button->isChecked();
 }

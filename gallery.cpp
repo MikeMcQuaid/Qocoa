@@ -10,21 +10,60 @@ Gallery::Gallery(QWidget *parent) : QWidget(parent)
 {
     setWindowTitle("Qocoa Gallery");
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->addWidget(new QSearchField(this));
-    layout->addWidget(new QButton(this, QButton::Rounded));
-    layout->addWidget(new QButton(this, QButton::RegularSquare));
-    layout->addWidget(new QButton(this, QButton::Disclosure));
-    layout->addWidget(new QButton(this, QButton::ShadowlessSquare));
-    layout->addWidget(new QButton(this, QButton::Circular));
-    layout->addWidget(new QButton(this, QButton::TexturedSquare));
-    layout->addWidget(new QButton(this, QButton::HelpButton));
-    layout->addWidget(new QButton(this, QButton::SmallSquare));
-    layout->addWidget(new QButton(this, QButton::TexturedRounded));
-    layout->addWidget(new QButton(this, QButton::RoundRect));
-    layout->addWidget(new QButton(this, QButton::Recessed));
-    layout->addWidget(new QButton(this, QButton::RoundedDisclosure));
+
+    QSearchField *searchField = new QSearchField(this);
+    layout->addWidget(searchField);
+
+    QButton *roundedButton = new QButton(this, QButton::Rounded);
+    roundedButton->setText("Button");
+    layout->addWidget(roundedButton);
+
+    QButton *regularSquareButton = new QButton(this, QButton::RegularSquare);
+    regularSquareButton->setText("Button");
+    layout->addWidget(regularSquareButton);
+
+    QButton *disclosureButton = new QButton(this, QButton::Disclosure);
+    layout->addWidget(disclosureButton);
+
+    QButton *shadowlessSquareButton = new QButton(this, QButton::ShadowlessSquare);
+    shadowlessSquareButton->setText("Button");
+    layout->addWidget(shadowlessSquareButton);
+
+    QButton *circularButton = new QButton(this, QButton::Circular);
+    layout->addWidget(circularButton);
+
+    QButton *textureSquareButton = new QButton(this, QButton::TexturedSquare);
+    textureSquareButton->setText("Textured Button");
+    layout->addWidget(textureSquareButton);
+
+    QButton *helpButton = new QButton(this, QButton::HelpButton);
+    layout->addWidget(helpButton);
+
+    QButton *smallSquareButton = new QButton(this, QButton::SmallSquare);
+    smallSquareButton->setText("Gradient Button");
+    layout->addWidget(smallSquareButton);
+
+    QButton *texturedRoundedButton = new QButton(this, QButton::TexturedRounded);
+    texturedRoundedButton->setText("Round Textured");
+    layout->addWidget(texturedRoundedButton);
+
+    QButton *roundedRectangleButton = new QButton(this, QButton::RoundRect);
+    roundedRectangleButton->setText("Rounded Rect Button");
+    layout->addWidget(roundedRectangleButton);
+
+    QButton *recessedButton = new QButton(this, QButton::Recessed);
+    recessedButton->setText("Recessed Button");
+    layout->addWidget(recessedButton);
+
+    QButton *roundedDisclosureButton = new QButton(this, QButton::RoundedDisclosure);
+    layout->addWidget(roundedDisclosureButton);
+
 #ifdef MAC_OS_X_VERSION_10_7
-    layout->addWidget(new QButton(this, QButton::Inline));
+    QButton *inlineButton = new QButton(this, QButton::Inline);
+    inlineButton->setText("Inline Button");
+    layout->addWidget(inlineButton);
 #endif
-    layout->addWidget(new QProgressIndicatorSpinning(this));
+
+    QProgressIndicatorSpinning *progressIndicatorSpinning = new QProgressIndicatorSpinning(this);
+    layout->addWidget(progressIndicatorSpinning);
 }
