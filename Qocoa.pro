@@ -15,7 +15,3 @@ mac {
     SOURCES += qsearchfield_nonmac.cpp qbutton_nonmac.cpp qprogressindicatorspinning_nonmac.cpp
     RESOURCES += qsearchfield_nonmac.qrc
 }
-
-contains(QT_CONFIG, embedded):debug {
-        CXXFLAGS += -Wno-psabi
-}
