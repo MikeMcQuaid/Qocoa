@@ -23,12 +23,50 @@ THE SOFTWARE.
 #include "qprogressindicatorspinning.h"
 
 #include <QVBoxLayout>
-#include <QDial>
+#include <QMovie>
+#include <QLabel>
 
-QProgressIndicatorSpinning::QProgressIndicatorSpinning(QWidget *parent) : QWidget(parent)
+class QProgressIndicatorSpinningPrivate : public QObject
+{
+public:
+    QProgressIndicatorSpinningPrivate(QProgressIndicatorSpinning *qProgressIndicatorSpinning,
+                                      QMovie *movie)
+        : QObject(qProgressIndicatorSpinning), movie(movie) {}
+
+    QPointer<QMovie> movie;
+};
+
+QProgressIndicatorSpinning::QProgressIndicatorSpinning(QWidget *parent,
+                                                       Thickness thickness)
+    : QWidget(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
-    // TODO: Use a decent widget replacement (e.g. animated gif).
-    layout->addWidget(new QDial(this));
+
+    QSize size(thickness, thickness);
+    QMovie *movie = new QMovie(this);
+    movie->setFileName(":/Qocoa/qprogressindicatorspinning_nonmac.gif");
+    movie->setScaledSize(size);
+    // Roughly match OSX speed.
+    movie->setSpeed(200);
+    pimpl = new QProgressIndicatorSpinningPrivate(this, movie);
+
+    QLabel *label = new QLabel(this);
+    label->setMovie(movie);
+
+    layout->addWidget(label);
+    setFixedSize(size);
+}
+
+
+void QProgressIndicatorSpinning::animate(bool animate)
+{
+    Q_ASSERT(pimpl && pimpl->movie);
+    if (!(pimpl && pimpl->movie))
+        return;
+
+    if (animate)
+        pimpl->movie->start();
+    else
+        pimpl->movie->stop();
 }

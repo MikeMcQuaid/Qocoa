@@ -27,21 +27,44 @@ THE SOFTWARE.
 #import "Foundation/NSAutoreleasePool.h"
 #import "AppKit/NSProgressIndicator.h"
 
-QProgressIndicatorSpinning::QProgressIndicatorSpinning(QWidget *parent) : QWidget(parent)
+class QProgressIndicatorSpinningPrivate : public QObject
+{
+public:
+    QProgressIndicatorSpinningPrivate(QProgressIndicatorSpinning *qProgressIndicatorSpinning,
+                                      NSProgressIndicator *nsProgressIndicator)
+        : QObject(qProgressIndicatorSpinning), nsProgressIndicator(nsProgressIndicator) {}
+
+    NSProgressIndicator *nsProgressIndicator;
+};
+
+QProgressIndicatorSpinning::QProgressIndicatorSpinning(QWidget *parent,
+                                                       Thickness thickness)
+    : QWidget(parent)
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     NSProgressIndicator *progress = [[NSProgressIndicator alloc] init];
     [progress setStyle:NSProgressIndicatorSpinningStyle];
-    // TODO: This doesn't work yet.
-    [progress startAnimation:nil];
+
+    pimpl = new QProgressIndicatorSpinningPrivate(this, progress);
 
     setupLayout(progress, this);
 
-    setMinimumSize(16, 16);
-    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    setFixedSize(thickness, thickness);
 
     [progress release];
 
     [pool drain];
+}
+
+void QProgressIndicatorSpinning::animate(bool animate)
+{
+    Q_ASSERT(pimpl);
+    if (!pimpl)
+        return;
+
+    if (animate)
+        [pimpl->nsProgressIndicator startAnimation:nil];
+    else
+        [pimpl->nsProgressIndicator stopAnimation:nil];
 }

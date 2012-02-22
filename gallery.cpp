@@ -65,5 +65,6 @@ Gallery::Gallery(QWidget *parent) : QWidget(parent)
 #endif
 
     QProgressIndicatorSpinning *progressIndicatorSpinning = new QProgressIndicatorSpinning(this);
+    progressIndicatorSpinning->animate();
     layout->addWidget(progressIndicatorSpinning);
 }
