@@ -166,6 +166,8 @@ QButton::QButton(QWidget *parent, BezelStyle bezelStyle) : QWidget(parent)
     QButtonTarget *target = [[QButtonTarget alloc] init];
     target->pimpl = pimpl;
     [button setTarget:target];
+    [target release];
+
     [button setAction:@selector(clicked)];
 
     setupLayout(button, this);

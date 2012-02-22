@@ -77,7 +77,9 @@ QSearchField::QSearchField(QWidget *parent) : QWidget(parent)
 
     QSearchFieldDelegate *delegate = [[QSearchFieldDelegate alloc] init];
     delegate->pimpl = pimpl;
+    [delegate retain];
     [search setDelegate:delegate];
+    [delegate release];
 
     setupLayout(search, this);
 
