@@ -35,6 +35,15 @@ class QSearchFieldPrivate : public QObject
 public:
     QSearchFieldPrivate(QSearchField *searchField, QLineEdit *lineEdit, QToolButton *clearButton)
         : QObject(searchField), lineEdit(lineEdit), clearButton(clearButton) {}
+    int lineEditFrameWidth() const {
+        return lineEdit->style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
+    }
+    int clearButtonPaddedWidth() const {
+        return clearButton->width() + lineEditFrameWidth() * 2;
+    }
+    int clearButtonPaddedHeight() const {
+        return clearButton->height() + lineEditFrameWidth() * 2;
+    }
     QPointer<QLineEdit> lineEdit;
     QPointer<QToolButton> clearButton;
 };
@@ -58,13 +67,12 @@ QSearchField::QSearchField(QWidget *parent) : QWidget(parent)
     clearButton->hide();
     connect(clearButton, SIGNAL(clicked()), this, SLOT(clear()));
 
-    const int frameWidth = lineEdit->style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
-    lineEdit->setStyleSheet(QString("QLineEdit { padding-right: %1px; } ").arg(clearIcon.width() - frameWidth - 1));
-    const int width = qMax(lineEdit->minimumSizeHint().width(), clearButton->width() + frameWidth * 2);
-    const int height = qMax(lineEdit->minimumSizeHint().height(), clearButton->height() + frameWidth * 2);
-    lineEdit->setMinimumSize(width, height);
-
     pimpl = new QSearchFieldPrivate(this, lineEdit, clearButton);
+
+    lineEdit->setStyleSheet(QString("QLineEdit { padding-right: %1px; } ").arg(pimpl->clearButtonPaddedWidth()));
+    const int width = qMax(lineEdit->minimumSizeHint().width(), pimpl->clearButtonPaddedWidth());
+    const int height = qMax(lineEdit->minimumSizeHint().height(), pimpl->clearButtonPaddedHeight());
+    lineEdit->setMinimumSize(width, height);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
@@ -117,8 +125,7 @@ void QSearchField::resizeEvent(QResizeEvent *resizeEvent)
         return;
 
     QWidget::resizeEvent(resizeEvent);
-    const int frameWidth = pimpl->lineEdit->style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
-    const int x = sizeHint().width() - pimpl->clearButton->width() - frameWidth;
-    const int y = sizeHint().height() - pimpl->clearButton->height()/2 - frameWidth*2;
+    const int x = width() - pimpl->clearButtonPaddedWidth();
+    const int y = (height() - pimpl->clearButton->height())/2;
     pimpl->clearButton->move(x, y);
 }
