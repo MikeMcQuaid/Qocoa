@@ -24,9 +24,6 @@ if(APPLE)
         qbutton_mac.mm
         qprogressindicatorspinning_mac.mm
     )
-    set(CMAKE_EXE_LINKER_FLAGS
-        "${CMAKE_EXE_LINKER_FLAGS} -framework Foundation -framework AppKit"
-    )
 else()
     list(APPEND SOURCES
         qsearchfield_nonmac.cpp
@@ -45,3 +42,7 @@ add_executable(Qocoa
     ${SOURCES} ${MOC_SOURCES} ${RESOURCES_SOURCES}
 )
 target_link_libraries(Qocoa ${QT_LIBRARIES})
+
+if(APPLE)
+    set_target_properties(Qocoa PROPERTIES LINK_FLAGS "-framework Foundation -framework AppKit")
+endif()
