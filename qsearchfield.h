@@ -25,6 +25,7 @@ public slots:
 signals:
     void textChanged(const QString &text);
     void editingFinished();
+    void returnPressed();
 
 protected:
     void resizeEvent(QResizeEvent*);
