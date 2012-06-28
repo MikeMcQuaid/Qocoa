@@ -20,8 +20,9 @@ public:
 public slots:
     void setText(const QString &text);
     void setPlaceholderText(const QString &text);
-
     void clear();
+    void selectAll();
+
 signals:
     void textChanged(const QString &text);
     void editingFinished();
