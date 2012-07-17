@@ -28,6 +28,14 @@ THE SOFTWARE.
 #import "Foundation/NSNotification.h"
 #import "AppKit/NSSearchField.h"
 
+#include <QApplication>
+#include <QClipboard>
+
+#define KEYCODE_A 0
+#define KEYCODE_X 7
+#define KEYCODE_C 8
+#define KEYCODE_V 9
+
 class QSearchFieldPrivate : public QObject
 {
 public:
@@ -83,11 +91,50 @@ public:
 }
 @end
 
+@interface QocoaSearchField : NSSearchField
+-(BOOL)performKeyEquivalent:(NSEvent*)event;
+@end
+
+@implementation QocoaSearchField
+-(BOOL)performKeyEquivalent:(NSEvent*)event {
+    if ([event type] == NSKeyDown && [event modifierFlags] & NSCommandKeyMask)
+    {
+        const unsigned short keyCode = [event keyCode];
+        if (keyCode == KEYCODE_A)
+        {
+            [self performSelector:@selector(selectText:)];
+            return YES;
+        }
+        else if (keyCode == KEYCODE_C)
+        {
+            QClipboard* clipboard = QApplication::clipboard();
+            clipboard->setText(toQString([self stringValue]));
+            return YES;
+        }
+        else if (keyCode == KEYCODE_V)
+        {
+            QClipboard* clipboard = QApplication::clipboard();
+            [self setStringValue:fromQString(clipboard->text())];
+            return YES;
+        }
+        else if (keyCode == KEYCODE_X)
+        {
+            QClipboard* clipboard = QApplication::clipboard();
+            clipboard->setText(toQString([self stringValue]));
+            [self setStringValue:@""];
+            return YES;
+        }
+    }
+
+    return NO;
+}
+@end
+
 QSearchField::QSearchField(QWidget *parent) : QWidget(parent)
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-    NSSearchField *search = [[NSSearchField alloc] init];
+    NSSearchField *search = [[QocoaSearchField alloc] init];
 
     QSearchFieldDelegate *delegate = [[QSearchFieldDelegate alloc] init];
     pimpl = delegate->pimpl = new QSearchFieldPrivate(this, search);
