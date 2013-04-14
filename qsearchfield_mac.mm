@@ -209,7 +209,7 @@ QString QSearchField::placeholderText() const
     return toQString([[pimpl->nsSearchField cell] placeholderString]);
 }
 
-void QSearchField::setFocus(Qt::FocusReason reason)
+void QSearchField::setFocus(Qt::FocusReason)
 {
     Q_ASSERT(pimpl);
     if (!pimpl)
