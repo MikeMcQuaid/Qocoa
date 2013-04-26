@@ -238,6 +238,19 @@ void QSearchField::setFocus()
     setFocus(Qt::OtherFocusReason);
 }
 
+void QSearchField::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::EnabledChange) {
+        Q_ASSERT(pimpl);
+        if (!pimpl)
+            return;
+
+        const bool enabled = isEnabled();
+        [pimpl->nsSearchField setEnabled: enabled];
+    }
+    QWidget::changeEvent(event);
+}
+
 void QSearchField::resizeEvent(QResizeEvent *resizeEvent)
 {
     QWidget::resizeEvent(resizeEvent);

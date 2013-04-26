@@ -94,6 +94,7 @@ QSearchField::QSearchField(QWidget *parent) : QWidget(parent)
     searchButton->setFixedSize(QSize(iconsize, iconsize));
     searchButton->setStyleSheet("border: none;");
     searchButton->setPopupMode(QToolButton::InstantPopup);
+    searchButton->setEnabled(false);
     connect(searchButton, SIGNAL(clicked()), this, SLOT(popupMenu()));
 
     pimpl = new QSearchFieldPrivate(this, lineEdit, clearButton, searchButton);
@@ -123,6 +124,7 @@ void QSearchField::setMenu(QMenu *menu)
     QIcon searchIcon = menu ? QIcon(QLatin1String(":/Qocoa/qsearchfield_nonmac_magnifier_menu.png"))
                             : QIcon(QLatin1String(":/Qocoa/qsearchfield_nonmac_magnifier.png"));
     pimpl->searchButton->setIcon(searchIcon);
+    pimpl->searchButton->setEnabled(isEnabled() && menu);
 }
 
 void QSearchField::popupMenu()
@@ -147,6 +149,21 @@ void QSearchField::popupMenu()
 
         pimpl->searchMenu->popup(point);
     }
+}
+
+void QSearchField::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::EnabledChange) {
+        Q_ASSERT(pimpl);
+        if (!pimpl)
+            return;
+
+        const bool enabled = isEnabled();
+        pimpl->searchButton->setEnabled(enabled && pimpl->searchMenu);
+        pimpl->lineEdit->setEnabled(enabled);
+        pimpl->clearButton->setEnabled(enabled);
+    }
+    QWidget::changeEvent(event);
 }
 
 void QSearchField::setText(const QString &text)
