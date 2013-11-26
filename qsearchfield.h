@@ -37,6 +37,7 @@ private slots:
     void popupMenu();
 
 protected:
+    void changeEvent(QEvent*);
     void resizeEvent(QResizeEvent*);
 
 private:
