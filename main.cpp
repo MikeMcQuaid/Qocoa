@@ -1,4 +1,5 @@
-#include <QtGui/QApplication>
+#include <QApplication>
+
 #include "gallery.h"
 
 int main(int argc, char *argv[])
