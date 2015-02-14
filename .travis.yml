@@ -1,17 +1,27 @@
-language: cpp
-os:
-  - linux
-  - osx
-env:
-  - XMAKE=qmake
-  - XMAKE=cmake
+language: objective-c
+os: osx
+matrix:
+  include:
+    - compiler: clang
+      env:
+        - XMAKE=qmake
+    - compiler: clang
+      env:
+        - XMAKE=cmake
+        - XMAKE_OPTIONS="."
+    - compiler: clang
+      env:
+        - XMAKE=qmake
+        - XMAKE_OPTIONS="NON_MAC_WIDGETS=1"
+    - compiler: gcc
+      env:
+        - XMAKE=cmake
+        - XMAKE_OPTIONS=". -DNON_MAC_WIDGETS=ON"
+        - CC=gcc-4.9
+        - CXX=g++-4.9
 before_install:
-  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get update; fi
-  - if [ $TRAVIS_OS_NAME = osx ];   then brew update; fi
+  - brew update
 install:
-  - if [ $TRAVIS_OS_NAME = linux ] && [ $XMAKE = cmake ]; then sudo apt-get install -y cmake; fi
-  - if [ $TRAVIS_OS_NAME = linux ];                       then sudo apt-get install -y libqt4-dev qt4-qmake; fi
-  - if [ $TRAVIS_OS_NAME = osx ]   && [ $XMAKE = cmake ]; then brew install cmake; fi
-  - if [ $TRAVIS_OS_NAME = osx ];                         then brew install qt; fi
+  - brew install qt
 script:
-  - $XMAKE . && make
+  - $XMAKE $XMAKE_OPTIONS && make
