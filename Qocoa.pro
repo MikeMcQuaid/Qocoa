@@ -7,11 +7,11 @@ HEADERS += gallery.h \
            qbutton.h \
            qprogressindicatorspinning.h \
 
-mac {
+!mac|equals(NON_MAC_WIDGETS, 1) { {
+    SOURCES += qsearchfield_nonmac.cpp qbutton_nonmac.cpp qprogressindicatorspinning_nonmac.cpp
+    RESOURCES += qsearchfield_nonmac.qrc qprogressindicatorspinning_nonmac.qrc
+} else {
     OBJECTIVE_SOURCES += qsearchfield_mac.mm qbutton_mac.mm qprogressindicatorspinning_mac.mm
     LIBS += -framework Foundation -framework Appkit
     QMAKE_CFLAGS += -mmacosx-version-min=10.6
-} else {
-    SOURCES += qsearchfield_nonmac.cpp qbutton_nonmac.cpp qprogressindicatorspinning_nonmac.cpp
-    RESOURCES += qsearchfield_nonmac.qrc qprogressindicatorspinning_nonmac.qrc
 }
