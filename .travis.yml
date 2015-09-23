@@ -1,10 +1,10 @@
 language: objective-c
 os: osx
+compiler: clang
+env:
+  - XMAKE=qmake
 matrix:
   include:
-    - compiler: clang
-      env:
-        - XMAKE=qmake
     - compiler: clang
       env:
         - XMAKE=cmake
