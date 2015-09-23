@@ -31,11 +31,6 @@ THE SOFTWARE.
 #include <QApplication>
 #include <QClipboard>
 
-#define KEYCODE_A 0
-#define KEYCODE_X 7
-#define KEYCODE_C 8
-#define KEYCODE_V 9
-
 class QSearchFieldPrivate : public QObject
 {
 public:
@@ -99,25 +94,25 @@ public:
 -(BOOL)performKeyEquivalent:(NSEvent*)event {
     if ([event type] == NSKeyDown && [event modifierFlags] & NSCommandKeyMask)
     {
-        const unsigned short keyCode = [event keyCode];
-        if (keyCode == KEYCODE_A)
+        QString keyString = toQString([event characters]);
+        if (keyString == "a")  // Cmd+a
         {
             [self performSelector:@selector(selectText:)];
             return YES;
         }
-        else if (keyCode == KEYCODE_C)
+        else if (keyString == "c")  // Cmd+c
         {
             QClipboard* clipboard = QApplication::clipboard();
             clipboard->setText(toQString([self stringValue]));
             return YES;
         }
-        else if (keyCode == KEYCODE_V)
+        else if (keyString == "v")  // Cmd+v
         {
             QClipboard* clipboard = QApplication::clipboard();
             [self setStringValue:fromQString(clipboard->text())];
             return YES;
         }
-        else if (keyCode == KEYCODE_X)
+        else if (keyString == "x")  // Cmd+x
         {
             QClipboard* clipboard = QApplication::clipboard();
             clipboard->setText(toQString([self stringValue]));
