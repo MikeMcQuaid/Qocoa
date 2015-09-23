@@ -1,5 +1,7 @@
 #include "gallery.h"
 
+#include <QKeyEvent>
+#include <QMessageBox>
 #include <QVBoxLayout>
 
 #include "qsearchfield.h"
@@ -11,8 +13,9 @@ Gallery::Gallery(QWidget *parent) : QWidget(parent)
     setWindowTitle("Qocoa Gallery");
     QVBoxLayout *layout = new QVBoxLayout(this);
 
-    QSearchField *searchField = new QSearchField(this);
+    searchField = new QSearchField(this);
     layout->addWidget(searchField);
+    searchField->installEventFilter(this);
 
     QSearchField *searchFieldPlaceholder = new QSearchField(this);
     searchFieldPlaceholder->setPlaceholderText("Placeholder text");
@@ -72,4 +75,21 @@ Gallery::Gallery(QWidget *parent) : QWidget(parent)
     QProgressIndicatorSpinning *progressIndicatorSpinning = new QProgressIndicatorSpinning(this);
     progressIndicatorSpinning->animate();
     layout->addWidget(progressIndicatorSpinning);
+}
+
+bool Gallery::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == searchField) {
+        if (event->type() == QEvent::KeyPress) {
+            QKeyEvent* e = static_cast<QKeyEvent*>(event);
+            switch (e->key()) {
+                case Qt::Key_Return:
+                    QMessageBox::information(this, "Key event received",
+                        "Key event \"" + QKeySequence(e->key()).toString() +
+                        "\" received on searchField");
+                return true;
+            }
+        }
+    }
+    return QWidget::eventFilter(watched, event);
 }

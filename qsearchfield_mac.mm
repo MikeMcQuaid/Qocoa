@@ -29,6 +29,7 @@ THE SOFTWARE.
 #import "AppKit/NSSearchField.h"
 
 #include <QApplication>
+#include <QKeyEvent>
 #include <QClipboard>
 
 class QSearchFieldPrivate : public QObject
@@ -51,8 +52,11 @@ public:
 
     void returnPressed()
     {
-        if (qSearchField)
+        if (qSearchField) {
             emit qSearchField->returnPressed();
+            QKeyEvent* event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+            QApplication::postEvent(qSearchField, event);
+        }
     }
 
     QPointer<QSearchField> qSearchField;
