@@ -16,7 +16,7 @@ make
 ```
 
 ## Status
-Qocoa classes are currently provided for NSButton, a spinning NSProgressIndicator and NSSearchField. There is a [TODO list](https://github.com/mikemcquaid/Qocoa/blob/master/TODO.md) for classes I hope to implement.
+I'm not personally working on this any more but will accept pull-requests.
 
 [![Build Status](https://travis-ci.org/mikemcquaid/Qocoa.svg?branch=master)](https://travis-ci.org/mikemcquaid/Qocoa)
 
