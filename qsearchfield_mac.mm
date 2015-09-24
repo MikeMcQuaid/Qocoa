@@ -59,6 +59,22 @@ public:
         }
     }
 
+    void keyDownPressed()
+    {
+        if (qSearchField) {
+            QKeyEvent* event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+            QApplication::postEvent(qSearchField, event);
+        }
+    }
+
+    void keyUpPressed()
+    {
+        if (qSearchField) {
+            QKeyEvent* event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+            QApplication::postEvent(qSearchField, event);
+        }
+    }
+
     QPointer<QSearchField> qSearchField;
     NSSearchField *nsSearchField;
 };
@@ -88,6 +104,23 @@ public:
     if ([[[notification userInfo] objectForKey:@"NSTextMovement"] intValue] == NSReturnTextMovement)
         pimpl->returnPressed();
 }
+
+-(BOOL)control: (NSControl *)control textView:
+        (NSTextView *)textView doCommandBySelector:
+        (SEL)commandSelector {
+    Q_ASSERT(pimpl);
+    if (!pimpl) return NO;
+
+    if (commandSelector == @selector(moveDown:)) {
+        pimpl->keyDownPressed();
+        return YES;
+    } else if (commandSelector == @selector(moveUp:)) {
+        pimpl->keyUpPressed();
+        return YES;
+    }
+    return NO;
+}
+
 @end
 
 @interface QocoaSearchField : NSSearchField
