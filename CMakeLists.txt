@@ -48,4 +48,5 @@ target_link_libraries(Qocoa ${QT_LIBRARIES})
 
 if(APPLE AND NOT ${NON_MAC_WIDGETS})
     set_target_properties(Qocoa PROPERTIES LINK_FLAGS "-framework Foundation -framework AppKit")
+    set_target_properties(Qocoa PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in)
 endif()
