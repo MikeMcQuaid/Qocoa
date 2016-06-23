@@ -18,7 +18,7 @@ make
 ## Status
 I'm not personally working on this any more but will accept pull-requests.
 
-[![Build Status](https://travis-ci.org/mikemcquaid/Qocoa.svg?branch=master)](https://travis-ci.org/mikemcquaid/Qocoa)
+[![Build Status](https://travis-ci.org/MikeMcQuaid/Qocoa.svg?branch=master)](https://travis-ci.org/MikeMcQuaid/Qocoa)
 
 ## Usage
 For each class you want to use copy the [`qocoa_mac.h`](https://github.com/mikemcquaid/Qocoa/blob/master/qocoa_mac.h), `$CLASS.h`, `$CLASS_mac.*` and `$CLASS_nonmac.*` files into your source tree and add them to your buildsystem. Examples are provided for [CMake](https://github.com/mikemcquaid/Qocoa/blob/master/CMakeLists.txt) and [QMake](https://github.com/mikemcquaid/Qocoa/blob/master/Qocoa.pro).
